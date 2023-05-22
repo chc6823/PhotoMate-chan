@@ -1,0 +1,29 @@
+import com.konkuk.photomate.Configuration
+
+def hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
+def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
+
+if (hasLibraryPlugin || hasApplicationPlugin) {
+    android {
+        compileSdk = Configuration.compileSdk
+        buildToolsVersion = "33.0.2"
+        defaultConfig {
+            targetSdk = Configuration.targetSdk
+            minSdk = Configuration.minSdk
+            if (hasLibraryPlugin) {
+                consumerProguardFiles("consumer-rules.pro")
+            }
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            versionName = Configuration.versionName
+            versionCode = Configuration.versionCode
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+        }
+    }
+}
