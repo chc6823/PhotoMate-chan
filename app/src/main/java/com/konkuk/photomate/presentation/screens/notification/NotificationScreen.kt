@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Switch
@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -32,20 +31,9 @@ fun NotificationScreen(
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    Column() {
-        Box(
-            modifier = modifier
-                .height(60.dp)
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(start = 26.dp, top = 15.dp)
-        ) {
-            Text(
-                text = "알림 설정",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-        }
+    Column {
+        ToolBar()
+
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -58,11 +46,28 @@ fun NotificationScreen(
 }
 
 @Composable
+fun ToolBar() {
+    val modifier: Modifier = Modifier
+    Box(
+        modifier = modifier
+            .height(60.dp)
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(start = 34.dp, top = 15.dp)
+    ) {
+        Text(
+            text = "알림 설정",
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+        )
+    }
+}
+
+@Composable
 fun Container(
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val shape = RoundedCornerShape(10.dp)
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,23 +75,23 @@ fun Container(
     ) {
         Box(
             modifier = Modifier
-                .size(340.dp, 100.dp)
-                .background(Color.White)
+                .width(340.dp)
+                .height(100.dp)
+                .background(Color.White, RoundedCornerShape(10.dp))
                 .padding(20.dp)
-                .clip(shape)
         ) {
             Column() {
                 Text(
                     text = "알림 설정",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 17.sp,
+                    fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Text(
                     text = "매칭 요청 알림을 ON/OFF",
                     color = Color.Gray,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
+                    fontSize = 16.sp,
                     modifier = Modifier.padding(bottom = 2.dp)
                 )
             }
@@ -99,8 +104,7 @@ fun Container(
                 ),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .size(78.dp, 39.dp)
-                    .scale(1.5f)
+                    .scale(1.6f)
             )
         }
     }
@@ -113,19 +117,7 @@ fun ScreenPreview() {
     val isChecked = remember { mutableStateOf(false) }
 
     Column() {
-        Box(
-            modifier = modifier
-                .height(60.dp)
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(start = 26.dp, top = 15.dp)
-        ) {
-            Text(
-                text = "알림 설정",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-        }
+        ToolBar()
         Box(
             modifier = modifier
                 .fillMaxSize()
