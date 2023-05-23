@@ -33,6 +33,11 @@ android {
             "NAVER_CLIENT_SECRET",
             properties.getProperty("NAVER_CLIENT_SECRET")
         )
+        buildConfigField(
+            "String", "KAKAO_NATIVE_APP_KEY", properties.getProperty("KAKAO_NATIVE_APP_KEY")
+        )
+        manifestPlaceholders["NATIVE_APP_KEY"] =
+            properties.getProperty("KAKAO_NATIVE_APP_KEY_NO_QUOTES")
     }
     buildTypes {
         getByName("release") {
