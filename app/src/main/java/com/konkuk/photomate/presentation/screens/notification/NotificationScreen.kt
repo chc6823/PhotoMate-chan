@@ -97,7 +97,16 @@ fun Container(
             }
             Switch(
                 checked = isChecked,
-                onCheckedChange = onCheckedChange,
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
+                    if (isChecked) {
+                        println("알림 설정이 활성화되었습니다.")
+                        enableBluetooth()
+                    } else {
+                        println("알림 설정이 비활성화되었습니다.")
+                        disableBluetooth()
+                    }
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Color(0xFFFFDA00),
                     uncheckedThumbColor = Color.Gray
@@ -143,4 +152,14 @@ fun ContainerPreview() {
             isChecked.value = newValue
         }
     )
+}
+
+private fun enableBluetooth() {
+    // 블루투스를 켜는 동작을 수행하는 코드 작성
+    // 예: BluetoothAdapter.enable()
+}
+
+private fun disableBluetooth() {
+    // 블루투스를 끄는 동작을 수행하는 코드 작성
+    // 예: BluetoothAdapter.disable()
 }
