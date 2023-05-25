@@ -19,6 +19,8 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
+import com.konkuk.photomate.presentation.screens.Login.loginscreen
+import com.konkuk.photomate.presentation.screens.Splash.SplashScreen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
@@ -56,6 +58,10 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.Home.route
                     ) {
+                        composable("splash") { SplashScreen(navController) }
+
+                        composable("login") { loginscreen() }
+
                         composable(route = Screen.Home.route) {
                             HomeScreen()
                         }

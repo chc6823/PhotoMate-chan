@@ -7,14 +7,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.konkuk.photomate.R
 import com.konkuk.photomate.presentation.screens.Splash.ui.theme.PhotoMateTheme
+import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +29,7 @@ class SplashActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFFFFDA00) // #FFDA00,짙은 노란색
                 ) {
-
+                    //SplashScreen()
                 }
             }
         }
@@ -34,7 +37,14 @@ class SplashActivity : ComponentActivity() {
 }
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(key1 = true) {
+        delay(1000L)
+        navController.navigate("login") {
+            popUpTo("splash") { inclusive = true }
+        }
+    }
+
     val app_icon = painterResource(id = R.drawable.app_icon)
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -60,6 +70,6 @@ fun SplashScreen() {
 @Composable
 fun DefaultPreview2() {
     PhotoMateTheme {
-        SplashScreen()
+        //SplashScreen()
     }
 }

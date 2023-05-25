@@ -32,7 +32,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFFFFFF) // White
                 ) {
-
+                    loginscreen()
                 }
             }
         }
