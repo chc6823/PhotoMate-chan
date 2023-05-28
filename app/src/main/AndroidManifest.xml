@@ -15,7 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoMate"
         tools:targetApi="31">
-
+        <activity
+            android:name=".presentation.screens.profile_modification.ProfileModificationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_profile_modification"
+            android:theme="@style/Theme.PhotoMate" />
+        <activity
+            android:name=".presentation.screens.profile.Main_MyPageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main_my_page"
+            android:theme="@style/Theme.PhotoMate" />
         <activity
             android:name=".presentation.screens.Login.LoginActivity"
             android:exported="false"
@@ -30,7 +39,7 @@
             android:name=".presentation.screens.Splash.SplashActivity"
             android:exported="true"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.PhotoMate" >
+            android:theme="@style/Theme.PhotoMate">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +50,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.PhotoMate">
-        </activity>
+            android:theme="@style/Theme.PhotoMate" />
     </application>
 
 </manifest>

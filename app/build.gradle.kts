@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 import com.konkuk.photomate.Configuration
 
+
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
@@ -87,7 +88,12 @@ dependencies {
     implementation(libs.bundles.room)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
 
@@ -120,38 +126,38 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.insets)
 
-    // ImageLoading Libraries
-    implementation(libs.glide)
-    implementation(libs.bundles.coil)
-    implementation(libs.bundles.lottie)
+//    // ImageLoading Libraries
+//    implementation(libs.glide)
+//    implementation(libs.bundles.coil)
+//    implementation(libs.bundles.lottie)
 
-    // Network
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(platform(libs.okhttp.bom))
-    implementation(libs.bundles.okhttp)
+//    // Network
+//    implementation(libs.retrofit.core)
+//    implementation(libs.retrofit.kotlin.serialization)
+//    implementation(platform(libs.okhttp.bom))
+//    implementation(libs.bundles.okhttp)
 
     // Logger - Timber
     api(libs.timber)
 
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.cloud.messaging)
-    implementation(libs.firebase.config)
+//    // Firebase
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.analytics)
+//    implementation(libs.firebase.crashlytics)
+//    implementation(libs.firebase.cloud.messaging)
+//    implementation(libs.firebase.config)
 
     // Third Party Libraries
     implementation(libs.kakao.user)
     implementation(libs.naver.map.compose)
     debugImplementation(libs.leakcanary)
 
-    // Testing
-    testImplementation(libs.junit)
-    testImplementation(libs.turbine)
-    testImplementation(libs.androidx.test.core)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.android.test.runner)
+//    // Testing
+//    testImplementation(libs.junit)
+//    testImplementation(libs.turbine)
+//    testImplementation(libs.androidx.test.core)
+//    androidTestImplementation(libs.androidx.junit)
+//    androidTestImplementation(libs.android.test.runner)
 
     coreLibraryDesugaring(libs.desugar)
 }

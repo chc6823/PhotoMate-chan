@@ -3,4 +3,6 @@
     <string name="title_activity_my_page">MyPageActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main_my_page">Main_MyPageActivity</string>
+    <string name="title_activity_profile_modification">ProfileModificationActivity</string>
 </resources>
