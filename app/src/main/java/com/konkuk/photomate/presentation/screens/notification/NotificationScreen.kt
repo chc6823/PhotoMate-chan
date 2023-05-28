@@ -135,10 +135,12 @@ fun ScreenPreview() {
                 .background(Color(0xFFD9D9D9))
                 .padding(31.dp)
         ) {
-            Container(isChecked = isChecked.value,
+            Container(
+                isChecked = isChecked.value,
                 onCheckedChange = { newValue ->
                     isChecked.value = newValue
-                })
+                }
+            )
         }
     }
 }

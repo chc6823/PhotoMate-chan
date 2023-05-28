@@ -19,8 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
+import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen

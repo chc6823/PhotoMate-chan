@@ -18,14 +18,12 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -35,18 +33,17 @@ import com.konkuk.photomate.R
 fun AlarmPopUp(
     modifier: Modifier = Modifier
 ) {
-    //PopUpPreview()
+    // PopUpPreview()
 }
 
-@Preview
 @Composable
-fun PopUpPreview() {
-    val name = "사용자 이름"
-    val address = "사용자 주소"
-    val score = 5.toString()
-    val modifier: Modifier = Modifier
-    val dialogOpenState = remember { mutableStateOf(true) }
-
+fun AlarmPopUp(
+    name: String,
+    address: String,
+    score: String,
+    modifier: Modifier,
+    dialogOpenState: MutableState<Boolean>
+) {
     Dialog(
         onDismissRequest = { dialogOpenState.value = false }
     ) {
@@ -114,7 +111,6 @@ fun PopUpPreview() {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                    //.padding(top = 7.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 Button(
@@ -125,7 +121,8 @@ fun PopUpPreview() {
                                     elevation = null,
                                     onClick = {
                                         /* 수락 버튼 클릭 시 수행할 작업 정의 */
-                                    }) {
+                                    }
+                                ) {
                                     Text(
                                         text = "수락",
                                         fontWeight = FontWeight.Bold,
@@ -145,7 +142,8 @@ fun PopUpPreview() {
                                     elevation = null,
                                     onClick = {
                                         /* 거절 버튼 클릭 시 수행할 작업 정의 */
-                                    }) {
+                                    }
+                                ) {
                                     Text(
                                         text = "거절",
                                         fontWeight = FontWeight.Bold,

@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.konan.properties.Properties
 import com.konkuk.photomate.Configuration
+import org.jetbrains.kotlin.konan.properties.Properties
 
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
@@ -137,4 +137,3 @@ dependencies {
 
     coreLibraryDesugaring(libs.desugar)
 }
-
