@@ -33,7 +33,7 @@ import com.konkuk.photomate.R
 fun AlarmPopUp(
     modifier: Modifier = Modifier
 ) {
-    // PopUpPreview()
+    // AlarmPopUp()
 }
 
 @Composable
