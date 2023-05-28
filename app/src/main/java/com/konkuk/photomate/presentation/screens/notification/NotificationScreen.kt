@@ -25,6 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+private var REQUEST_ALARM = 1 // 통신 요청 코드 (0:False/1:True)
+
 @Composable
 fun NotificationScreen(
     modifier: Modifier = Modifier,
@@ -155,11 +157,9 @@ fun ContainerPreview() {
 }
 
 private fun enableBluetooth() {
-    // 블루투스를 켜는 동작을 수행하는 코드 작성
-    // 예: BluetoothAdapter.enable()
+    REQUEST_ALARM = 1
 }
 
 private fun disableBluetooth() {
-    // 블루투스를 끄는 동작을 수행하는 코드 작성
-    // 예: BluetoothAdapter.disable()
+    REQUEST_ALARM = 0
 }
