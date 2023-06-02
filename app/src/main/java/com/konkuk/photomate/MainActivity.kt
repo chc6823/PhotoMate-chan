@@ -42,6 +42,8 @@ import com.konkuk.photomate.presentation.components.LocationButton
 import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
 import com.konkuk.photomate.presentation.components.PhotoMateFloatingActionButton
+import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
+import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.home.HomeViewModel
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
@@ -135,6 +137,15 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
+                        composable(route = Screen.Notification.route) {
+                            val isChecked = remember { mutableStateOf(false) }
+
+                            NotificationScreen(
+                                isChecked = isChecked.value,
+                                onCheckedChange = { newValue ->
+                                    isChecked.value = newValue
+                                }
+                            )
                         }
                     ) { padding ->
                         NavHost(
