@@ -1,7 +1,6 @@
 package com.konkuk.photomate.presentation.screens.review
 
 import android.os.Bundle
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -147,7 +147,7 @@ fun reviewscreen(){
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(screenHeight * 0.1f)
-                        .background(Color.Yellow)
+                        .background(colorResource(id = R.color.main_color))
                         .clickable { /* 클릭 행동 처리 */ },
                     contentAlignment = Alignment.Center
                 ) {
