@@ -10,6 +10,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
@@ -17,8 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
+import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
@@ -60,7 +62,14 @@ class MainActivity : ComponentActivity() {
                             HomeScreen()
                         }
                         composable(route = Screen.Notification.route) {
-                            NotificationScreen()
+                            val isChecked = remember { mutableStateOf(false) }
+
+                            NotificationScreen(
+                                isChecked = isChecked.value,
+                                onCheckedChange = { newValue ->
+                                    isChecked.value = newValue
+                                }
+                            )
                         }
                         composable(route = Screen.Profile.route) {
                             ProfileScreen()
