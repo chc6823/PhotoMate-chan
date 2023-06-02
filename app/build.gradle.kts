@@ -9,6 +9,7 @@ plugins {
     id(libs.plugins.android.application.get().pluginId)
     id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.kotlin.parcelize.get().pluginId)
+    id(libs.plugins.kotlin.serialization.get().pluginId)
     id(libs.plugins.hilt.plugin.get().pluginId)
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.ktlint.get().pluginId) version libs.versions.ktlint.get()
