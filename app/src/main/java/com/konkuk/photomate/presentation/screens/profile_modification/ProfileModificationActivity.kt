@@ -189,7 +189,7 @@ fun PhotoMateTextField() {
     var text by remember {mutableStateOf("")}
     OutlinedTextField(
         value = text,
-        onValueChange ={ text = it }
+        onValueChange = { text = it }
     )
 
 }

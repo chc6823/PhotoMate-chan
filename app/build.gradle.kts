@@ -24,8 +24,11 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     defaultConfig {
+        manifestPlaceholders += mapOf()
         manifestPlaceholders["NATIVE_APP_KEY"] =
             properties.getProperty("KAKAO_NATIVE_APP_KEY_NO_QUOTES")
         buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("NAVER_CLIENT_ID"))
@@ -37,6 +40,9 @@ android {
         buildConfigField(
             "String", "KAKAO_NATIVE_APP_KEY", properties.getProperty("KAKAO_NATIVE_APP_KEY")
         )
+        vectorDrawables {
+            useSupportLibrary = true
+        }
         manifestPlaceholders["NATIVE_APP_KEY"] =
             properties.getProperty("KAKAO_NATIVE_APP_KEY_NO_QUOTES")
     }
@@ -52,6 +58,14 @@ android {
         }
     }
     namespace = Configuration.packageName
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
@@ -72,8 +86,18 @@ dependencies {
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.datastore)
     implementation(libs.bundles.room)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
+
+    //rating bar
+    implementation("com.android.support:appcompat-v7:28.0.0")
+    implementation("com.iarcuschin:simpleratingbar:0.1.5")
 
     // Hilt
     implementation(libs.hilt.android)

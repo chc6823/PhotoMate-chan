@@ -142,8 +142,8 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             startDestination = Screen.Home.route
                         ) {
-                            composable(route = Screen.Home.route) {
-                            val state by homeViewModel.state.collectAsStateWithLifecycle()
+                                composable(route = Screen.Home.route) {
+                                val state by homeViewModel.state.collectAsStateWithLifecycle()
                                 HomeScreen(
                                     state = state
                                 )
@@ -158,9 +158,9 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                             }
-                            composable(route = Screen.Profile.route) {
-                                ProfileScreen()
-                            }
+//                            composable(route = Screen.mypage.route) {
+//                                ProfileScreen()
+//                            }
                         }
                     }
                 }

@@ -20,6 +20,11 @@
         android:theme="@style/Theme.PhotoMate"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.screens.review.ReviewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_review"
+            android:theme="@style/Theme.PhotoMate" />
+        <activity
             android:name=".presentation.screens.profile_modification.ProfileModificationActivity"
             android:exported="false"
             android:label="@string/title_activity_profile_modification"
