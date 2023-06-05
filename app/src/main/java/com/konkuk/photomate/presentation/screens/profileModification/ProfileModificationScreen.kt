@@ -13,10 +13,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,13 +59,16 @@ fun ProfileModificationScreen(
                 Box(
                     Modifier
                         .fillMaxWidth()
-                        .height(screenHeight * 0.09f)
+                        .height(screenHeight * 0.09f),
+                    contentAlignment = Alignment.Center
                 ) {
                     // 위쪽 부분
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .height(screenHeight * 0.09f)
+                            .padding(horizontal = 12.dp)
+                            .wrapContentHeight(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
                             painter = painterResource(R.drawable.x_button), // 닫기 버튼 이미지 리소스
@@ -91,46 +99,35 @@ fun ProfileModificationScreen(
                                 .align(Alignment.CenterVertically)
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                                 .wrapContentHeight(),
-                            color = Color.Black.copy(alpha = 0.5f), // 텍스트 색상의 투명도를 50%로 설정
-                            fontSize = 25.sp
+                            color = Color.Gray,
+                            fontSize = 20.sp
                         )
                     }
                 }
-
-                // 회색 선 그리기
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(screenHeight * 0.002f)
-                        .background(Color.Gray)
-                )
+                Divider()
                 //-------------
                 Spacer(modifier = Modifier.height(screenHeight * 0.05f))
                 //-------------
-                Box(
+                // 아래쪽 부분
+                Column(
                     Modifier
-                        .fillMaxWidth()
-                        .weight(9f)
+                        .fillMaxSize()
+                        .padding(start = screenWidth * 0.02f, end = screenWidth * 0.02f)
                 ) {
-                    // 아래쪽 부분
-                    Column(
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = screenWidth * 0.02f, end = screenWidth * 0.02f)
+                    Box(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(screenHeight * 0.15f),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                        Box(
+                            contentAlignment = Alignment.BottomEnd
                         ) {
                             Image(
                                 painter = painterResource(R.drawable.hoonie),
                                 contentDescription = "Profile Image",
                                 modifier = Modifier
-                                    .height(screenHeight * 0.15f)
-                                    .width(screenWidth * 0.3f),
+                                    .size(100.dp),
                                 contentScale = ContentScale.Crop
                             )
                             Image(
@@ -143,18 +140,19 @@ fun ProfileModificationScreen(
                                 contentScale = ContentScale.Fit
                             )
                         }
-                        Spacer(modifier = Modifier.height(screenHeight * 0.02f))
-                        Text(
-                            text = "닉네임",
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .wrapContentHeight()
-                                .align(Alignment.Start),
-                            style = TextStyle(fontWeight = FontWeight.Bold),
-                            fontSize = 25.sp
-                        )
-                        PhotoMateTextField()
                     }
+                    Spacer(modifier = Modifier.height(screenHeight * 0.02f))
+                    Text(
+                        text = "닉네임",
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .wrapContentHeight()
+                            .padding(start = 12.dp),
+                        style = TextStyle(fontWeight = FontWeight.Bold),
+                        fontSize = 25.sp
+                    )
+                    Spacer(modifier = Modifier.height(screenHeight * 0.02f))
+                    PhotoMateTextField()
                 }
             }
         }
@@ -165,8 +163,15 @@ fun ProfileModificationScreen(
 fun PhotoMateTextField() {
     var text by remember { mutableStateOf("") }
     OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
         value = text,
-        onValueChange = { text = it }
+        onValueChange = { text = it },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            cursorColor = Color.Black,
+            focusedBorderColor = Color.Black
+        )
     )
 
 }

@@ -91,7 +91,7 @@ dependencies {
 
     //rating bar
     implementation("com.android.support:appcompat-v7:28.0.0")
-    implementation("com.iarcuschin:simpleratingbar:0.1.5")
+    implementation("com.github.ome450901:SimpleRatingBar:1.5.1")
 
     // Hilt
     implementation(libs.hilt.android)

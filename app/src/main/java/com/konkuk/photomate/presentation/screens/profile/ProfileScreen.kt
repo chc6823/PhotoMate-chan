@@ -13,14 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -142,7 +136,8 @@ fun ProfileScreen(
             ) {
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
-                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
+                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.matching),
@@ -155,7 +150,7 @@ fun ProfileScreen(
                     Text(
                         text = "매칭 내역",
                         style = TextStyle(
-                            fontSize = 30.sp
+                            fontSize = 20.sp
                         ),
                         modifier = Modifier
                             .fillMaxHeight()
@@ -184,7 +179,8 @@ fun ProfileScreen(
             ) {
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
-                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
+                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.moabogi),
@@ -197,7 +193,7 @@ fun ProfileScreen(
                     Text(
                         text = "모아 보기",
                         style = TextStyle(
-                            fontSize = 30.sp
+                            fontSize = 20.sp
                         ),
                         modifier = Modifier
                             .fillMaxHeight()
@@ -226,7 +222,8 @@ fun ProfileScreen(
             ) {
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
-                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
+                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.version_history),
@@ -239,7 +236,7 @@ fun ProfileScreen(
                     Text(
                         text = "버전 정보",
                         style = TextStyle(
-                            fontSize = 30.sp
+                            fontSize = 20.sp
                         ),
                         modifier = Modifier
                             .fillMaxHeight()
@@ -259,59 +256,6 @@ fun ProfileScreen(
                 )
             }
             //-------
-        }
-    }
-}
-
-
-@Composable
-//overload
-fun PhotoMateBottomBar(
-    navController: NavController, modifier: Modifier
-) {
-    Surface(modifier = modifier.fillMaxWidth()) {
-        // PhotoMateBottomBar의 구현 부분
-        val screens = listOf(Screen.Home, Screen.Notification, Screen.Profile)
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        NavigationBar(
-            containerColor = Color.White
-        ) {
-            screens.forEach { screen ->
-                val selected = screen.route == currentRoute
-
-                NavigationBarItem(
-                    selected = selected,
-                    onClick = {
-                        navController.navigate(screen.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.DarkGray,
-                        unselectedIconColor = Color.Gray,
-                        selectedTextColor = Color.DarkGray,
-                        unselectedTextColor = Color.Gray,
-                        indicatorColor = Color.White
-                    ),
-                    label = {
-                        Text(
-                            text = screen.name,
-                            fontWeight = FontWeight.Medium
-                        )
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = screen.icon,
-                            contentDescription = "${screen.name} Icon"
-                        )
-                    }
-                )
-            }
         }
     }
 }
