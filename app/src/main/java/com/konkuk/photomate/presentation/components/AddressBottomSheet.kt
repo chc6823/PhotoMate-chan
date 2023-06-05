@@ -2,6 +2,7 @@ package com.konkuk.photomate.presentation.components
 
 import android.graphics.fonts.FontStyle
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.GpsFixed
-import androidx.compose.material.icons.filled.GpsNotFixed
-import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -43,7 +42,10 @@ import com.konkuk.photomate.R
 fun AddressBottomSheet(
     modifier: Modifier = Modifier,
     address: String,
-    onConfirmRequest: () -> Unit
+    onConfirmRequest: () -> Unit,
+    isBluetoothEnabled: Boolean,
+    onFindAndConnectClosestDevice: () -> Unit,
+    onDissMissBluetoothRequest: () -> Unit
 ) {
     Column {
         Box(
@@ -133,7 +135,19 @@ fun AddressBottomSheet(
                 .background(color = colorResource(id = R.color.main_color))
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 20.dp),
+                .padding(vertical = 20.dp)
+                .clickable {
+                    if (isBluetoothEnabled) {
+//                        findAndConnectClosestDevice(context, dialogOpenState, {
+//                            AlarmPopUp(device.name, device.address)
+//                        })
+                        onFindAndConnectClosestDevice()
+                    } else {
+//                        val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+//                        requestBluetoothEnable.launch(enableBluetoothIntent)
+                        onDissMissBluetoothRequest()
+                    }
+                },
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -154,6 +168,9 @@ fun AddressBottomSheet(
 fun AddressBottomSheetPreview() {
     AddressBottomSheet(
         address = "경북 포항시 북구 두호동 685-1",
-        onConfirmRequest = {}
+        onConfirmRequest = {},
+        isBluetoothEnabled = false,
+        onDissMissBluetoothRequest = {},
+        onFindAndConnectClosestDevice = {}
     )
 }
