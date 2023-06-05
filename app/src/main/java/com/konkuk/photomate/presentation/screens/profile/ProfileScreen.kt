@@ -95,12 +95,11 @@ fun ProfileScreen(
                         text = "후니쓰",
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
+                            fontSize = 25.sp
                         ),
                         // 텍스트를 수직 가운데로 정렬하기 위해 상하 padding 추가
                         modifier = Modifier.padding(vertical = TextpaddingDp)
                     )
-
                 }
             }
 
