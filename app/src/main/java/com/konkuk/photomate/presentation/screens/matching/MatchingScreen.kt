@@ -1,7 +1,11 @@
 package com.konkuk.photomate.presentation.screens.matching
 
+import android.content.Context
+import android.content.Intent
+import android.provider.MediaStore
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -47,6 +51,7 @@ fun MatchingScreen(
     imageUrl: String = "http://117.16.142.55/wordpress/wp-content/uploads/2014/11/img_02.jpg",
     representativeImages: List<String> = emptyList()
 ) {
+    val context = LocalContext.current
     Column {
         Box(
             modifier = modifier
@@ -148,7 +153,10 @@ fun MatchingScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = colorResource(id = R.color.main_color)),
+                .background(color = colorResource(id = R.color.main_color))
+                .clickable {
+                    openCameraScreen(context) // error
+                },
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -168,7 +176,14 @@ fun MatchingScreen(
     }
 }
 
-@Preview()
+fun openCameraScreen(
+    context: Context
+) {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    context.startActivity(intent)
+}
+
+@Preview
 @Composable
 fun MatchingScreenPreview() {
     MatchingScreen(

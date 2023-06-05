@@ -14,6 +14,7 @@ import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,13 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private var REQUEST_ALARM = 1 // 통신 요청 코드 (0:False/1:True)
-
 @Composable
 fun NotificationScreen(
     modifier: Modifier = Modifier,
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    requestAlarm: MutableState<Int>
 ) {
     Column {
         ToolBar()
@@ -42,7 +42,7 @@ fun NotificationScreen(
                 .background(Color(0xFFD9D9D9).copy(alpha = 0.25f))
                 .padding(31.dp)
         ) {
-            Container(isChecked = isChecked, onCheckedChange = onCheckedChange)
+            Container(isChecked = isChecked, onCheckedChange = onCheckedChange, requestAlarm = requestAlarm)
         }
     }
 }
@@ -68,7 +68,8 @@ fun ToolBar() {
 @Composable
 fun Container(
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    requestAlarm: MutableState<Int>
 ) {
     Column(
         modifier = Modifier
@@ -103,10 +104,10 @@ fun Container(
                     onCheckedChange(isChecked)
                     if (isChecked) {
                         println("알림 설정이 활성화되었습니다.")
-                        enableBluetooth()
+                        requestAlarm.value = 1
                     } else {
                         println("알림 설정이 비활성화되었습니다.")
-                        disableBluetooth()
+                        requestAlarm.value = 0
                     }
                 },
                 colors = SwitchDefaults.colors(
@@ -126,6 +127,7 @@ fun Container(
 fun ScreenPreview() {
     val modifier: Modifier = Modifier
     val isChecked = remember { mutableStateOf(false) }
+    val requestAlarm = remember { mutableStateOf(0) }
 
     Column() {
         ToolBar()
@@ -139,7 +141,8 @@ fun ScreenPreview() {
                 isChecked = isChecked.value,
                 onCheckedChange = { newValue ->
                     isChecked.value = newValue
-                }
+                },
+                requestAlarm = requestAlarm
             )
         }
     }
@@ -149,19 +152,13 @@ fun ScreenPreview() {
 @Composable
 fun ContainerPreview() {
     val isChecked = remember { mutableStateOf(false) }
+    val requestAlarm = remember { mutableStateOf(0) }
 
     Container(
         isChecked = isChecked.value,
         onCheckedChange = { newValue ->
             isChecked.value = newValue
-        }
+        },
+        requestAlarm = requestAlarm
     )
-}
-
-private fun enableBluetooth() {
-    REQUEST_ALARM = 1
-}
-
-private fun disableBluetooth() {
-    REQUEST_ALARM = 0
 }

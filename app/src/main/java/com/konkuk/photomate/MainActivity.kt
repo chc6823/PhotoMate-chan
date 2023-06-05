@@ -2,12 +2,11 @@
 
 package com.konkuk.photomate
 
-import android.bluetooth.BluetoothAdapter
+import android.Manifest
+import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
-import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,9 +46,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.konkuk.photomate.presentation.components.AddressBottomSheet
 import com.konkuk.photomate.presentation.components.LocationButton
-import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
 import com.konkuk.photomate.presentation.components.PhotoMateFloatingActionButton
+import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.home.HomeViewModel
 import com.konkuk.photomate.presentation.screens.matching.MatchingScreen
@@ -121,7 +119,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-
                 LaunchedEffect(Unit) {
                     // 블루투스 연결 권한 확인
                     hasBluetoothPermission = ContextCompat.checkSelfPermission(
@@ -130,12 +127,11 @@ class MainActivity : ComponentActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 }
 
-
                 if (isPopUpAlarmShown) {
                     AlarmPopUp(
-                        name = "건국이",
-                        address = "건대",
-                        score = 4.3f,
+                        name = "건국이", // 상대방에게 넘길 나의 이름
+                        address = "건대", // 상대방에게 넘길 나의 주소
+                        score = 4.3f, // 상대방에게 넘길 나의 평점
                         onDismissRequest = {
                             isPopUpAlarmShown = false
                         },
@@ -155,6 +151,7 @@ class MainActivity : ComponentActivity() {
                                 onConfirmRequest = {},
                                 onFindAndConnectClosestDevice = {
                                     findAndConnectClosestDevice(
+                                        context = this@MainActivity,
                                         hasPermission = hasBluetoothPermission,
                                         onShowModalBottomSheet = {
                                             scope.launch {
@@ -170,7 +167,6 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 onDissMissBluetoothRequest = {
-
                                 },
                                 isBluetoothEnabled = false
                             )
@@ -217,13 +213,14 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(route = Screen.Notification.route) {
-                                val isChecked = remember { mutableStateOf(false) }
-
+                                val isChecked = remember { mutableStateOf(true) }
+                                val requestAlarm = remember { mutableStateOf(1) }
                                 NotificationScreen(
                                     isChecked = isChecked.value,
                                     onCheckedChange = { newValue ->
                                         isChecked.value = newValue
-                                    }
+                                    },
+                                    requestAlarm = requestAlarm
                                 )
                             }
                             composable(route = Screen.Profile.route) {
@@ -245,12 +242,14 @@ class MainActivity : ComponentActivity() {
 }
 
 private fun findAndConnectClosestDevice(
+    context: Context,
     hasPermission: Boolean,
     onShowModalBottomSheet: () -> Unit,
     onShowToastMessage: (String) -> Unit,
     onShowAlarm: () -> Unit
 ) {
-    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    val bluetoothAdapter = bluetoothManager.adapter
     val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
     // Bluetooth 지원 여부 확인
@@ -277,7 +276,7 @@ private fun findAndConnectClosestDevice(
             pairedDevices?.forEach { device ->
                 // 상대방에게 블루투스로 연결하고 AlarmPopUp() 함수 호출
                 val socket: BluetoothSocket? = device.createRfcommSocketToServiceRecord(uuid)
-                socket?.connect()
+                socket?.connect() // 블루투스 연결
                 onShowModalBottomSheet()
                 Timber.tag("onseok").d(device.toString())
                 onShowAlarm()

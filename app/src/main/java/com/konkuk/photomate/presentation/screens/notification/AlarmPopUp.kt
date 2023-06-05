@@ -33,6 +33,7 @@ import com.konkuk.photomate.R
 @Composable
 fun AlarmPopUp(
     modifier: Modifier = Modifier,
+    // 상대방 기기 정보
     name: String,
     address: String,
     score: Float,

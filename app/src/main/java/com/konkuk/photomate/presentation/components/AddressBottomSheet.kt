@@ -1,6 +1,5 @@
 package com.konkuk.photomate.presentation.components
 
-import android.graphics.fonts.FontStyle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -138,13 +137,8 @@ fun AddressBottomSheet(
                 .padding(vertical = 20.dp)
                 .clickable {
                     if (isBluetoothEnabled) {
-//                        findAndConnectClosestDevice(context, dialogOpenState, {
-//                            AlarmPopUp(device.name, device.address)
-//                        })
                         onFindAndConnectClosestDevice()
                     } else {
-//                        val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-//                        requestBluetoothEnable.launch(enableBluetoothIntent)
                         onDissMissBluetoothRequest()
                     }
                 },
@@ -161,7 +155,6 @@ fun AddressBottomSheet(
         }
     }
 }
-
 
 @Preview
 @Composable
