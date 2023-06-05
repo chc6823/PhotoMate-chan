@@ -33,13 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.konkuk.photomate.R
-import com.konkuk.photomate.presentation.screens.mypage.PhotoMateBottomBar
 
 @Composable
 fun ProfileModificationScreen(
     navController: NavController
 ) {
-//    val navController = rememberNavController()
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
@@ -71,6 +69,9 @@ fun ProfileModificationScreen(
                                 .align(Alignment.CenterVertically)
                                 .height(screenHeight * 0.04f)
                                 .width(screenWidth * 0.04f)
+                                .clickable {
+                                    navController.navigateUp()
+                                }
                         )
 
                         Text(
@@ -156,13 +157,6 @@ fun ProfileModificationScreen(
                     }
                 }
             }
-
-
-            // PhotoMateBottomBar를 화면 아래에 고정
-            PhotoMateBottomBar(
-                navController = navController,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }

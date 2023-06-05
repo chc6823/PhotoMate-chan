@@ -55,7 +55,7 @@ import com.konkuk.photomate.presentation.screens.matching.MatchingScreen
 import com.konkuk.photomate.presentation.screens.notification.AlarmPopUp
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
-import com.konkuk.photomate.presentation.screens.splash.SplashScreen
+import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
 import com.konkuk.photomate.ui.theme.PhotoMateTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -225,7 +225,11 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(route = Screen.Profile.route) {
-                                ProfileScreen()
+                                ProfileScreen(
+                                    onNavigateToModification = {
+                                        navController.navigate("modification")
+                                    }
+                                )
                             }
                             composable(route = "matching") {
                                 MatchingScreen(
@@ -233,6 +237,9 @@ class MainActivity : ComponentActivity() {
                                     rating = 4.3f,
                                     navController = navController
                                 )
+                            }
+                            composable(route = "modification") {
+                                ProfileModificationScreen(navController = navController)
                             }
                         }
                     }
