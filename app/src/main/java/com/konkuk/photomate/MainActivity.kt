@@ -176,7 +176,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         bottomBar = {
-                            PhotoMateBottomBar(navController = navController)
+                            if (currentRoute != "modification") {
+                                PhotoMateBottomBar(navController = navController)
+                            }
                         },
                         floatingActionButton = {
                             if (currentRoute == Screen.Home.route) {

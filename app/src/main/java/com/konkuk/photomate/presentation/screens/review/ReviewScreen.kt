@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,15 +36,15 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.konkuk.photomate.R
+import com.willy.ratingbar.ScaleRatingBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewScreen() {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val rating = remember { mutableStateOf(0f) } // initialize with your initial rating
+    val rating by remember { mutableStateOf(0f) } // initialize with your initial rating
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -99,7 +100,25 @@ fun ReviewScreen() {
                     .height(screenHeight * 0.10f)
                     .align(Alignment.CenterHorizontally)
             ) {
-                RatingBar(rating)
+                AndroidView(
+                    modifier = Modifier.fillMaxSize(),
+                    //factory 블록 : view를 얻기 위해 최초로 실행되는 블록
+                    factory = { context ->
+                        ScaleRatingBar(context).apply {
+                            this.rating = rating
+                            this.stepSize = 1f
+                            this.numStars = 5
+                            this.starWidth = 150
+                            this.starHeight = 150
+                            this.setFilledDrawableRes(R.drawable.ic_star)
+                            this.setEmptyDrawableRes(R.drawable.ic_star_empty)
+                        }
+                    },
+                    //recompose될때마다 실행되는 블록
+                    update = { view ->
+                        view.rating = rating
+                    }
+                )
             }
             //---------
             Spacer(modifier = Modifier.height((screenHeight * 0.03f)))
@@ -107,6 +126,7 @@ fun ReviewScreen() {
             Divider(color = Color.Gray, modifier = Modifier.fillMaxWidth())
             //---------
             Spacer(modifier = Modifier.height((screenHeight * 0.2f)))
+
             TextField(
                 value = "",
                 onValueChange = { /*TODO*/ },
@@ -140,27 +160,10 @@ fun ReviewScreen() {
                     )
                 }
             }
-
-
         }
     }
 }
 
-@Composable
-fun RatingBar(rating: MutableState<Float>) {
-    AndroidView(
-        //factory 블록 : view를 얻기 위해 최초로 실행되는 블록
-        factory = { context ->
-            SimpleRatingBar(context).apply {
-                // apply some initial settings if needed
-            }
-        },
-        //recompose될때마다 실행되는 블록
-        update = { view ->
-            view.rating = rating.value
-        }
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
