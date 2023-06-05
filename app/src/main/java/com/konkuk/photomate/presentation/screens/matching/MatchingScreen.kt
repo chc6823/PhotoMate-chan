@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -26,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -48,7 +54,7 @@ fun MatchingScreen(
     navController: NavHostController,
     name: String,
     rating: Float,
-    imageUrl: String = "http://117.16.142.55/wordpress/wp-content/uploads/2014/11/img_02.jpg",
+    imageUrl: String = "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2021/07/26/bbe2deec-47db-4866-a8ce-abb39a0a181d.jpg",
     representativeImages: List<String> = emptyList()
 ) {
     val context = LocalContext.current
@@ -75,7 +81,7 @@ fun MatchingScreen(
                     Text(
                         text = name,
                         style = TextStyle(
-                            fontSize = 22.sp,
+                            fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
                     )
@@ -89,7 +95,7 @@ fun MatchingScreen(
                     Text(
                         text = "평점",
                         style = TextStyle(
-                            fontSize = 22.sp,
+                            fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
                     )
@@ -115,9 +121,13 @@ fun MatchingScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     AsyncImage(
-                        modifier = Modifier.size(150.dp),
+                        modifier = Modifier
+                            .size(150.dp)
+                            .clip(CircleShape),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(imageUrl).build(),
+                            .data(imageUrl)
+                            .crossfade(true)
+                            .build(),
                         contentScale = ContentScale.Crop,
                         contentDescription = "프로필 사진"
                     )
@@ -132,24 +142,32 @@ fun MatchingScreen(
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                Row {
-                    representativeImages.forEach { representativeImage ->
-                        Surface(
-                            modifier = Modifier.size(80.dp),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                AsyncImage(
-                                    modifier = Modifier.fillMaxSize(),
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(representativeImage).build(),
-                                    contentScale = ContentScale.Crop,
-                                    contentDescription = "프로필 사진"
-                                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    contentPadding = PaddingValues(horizontal = 4.dp),
+                    content = {
+                        items(representativeImages) { representativeImage ->
+                            Surface(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(4.dp),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Box(modifier = Modifier
+                                    .fillMaxSize()
+                                ) {
+                                    AsyncImage(
+                                        modifier = Modifier.fillMaxSize(),
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(representativeImage).build(),
+                                        contentScale = ContentScale.Crop,
+                                        contentDescription = "프로필 사진"
+                                    )
+                                }
                             }
                         }
                     }
-                }
+                )
             }
         }
         Box(

@@ -278,9 +278,20 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(route = "matching") {
                                 MatchingScreen(
-                                    name = "asdasdsad",
+                                    name = "마블리",
                                     rating = 4.3f,
-                                    navController = navController
+                                    navController = navController,
+                                    representativeImages = listOf(
+                                        "https://mblogthumb-phinf.pstatic.net/MjAxODAzMTZfMTk5/MDAxNTIxMTI5MjMyMjk0.DlTG5nDHu4wKAnX15KlEgEJk6h2NfXH_fmykI0AKoT0g.XeVgZnGOI-2H5GW99WJJnD8u9ZyrRDo-vS-EUQQ3Cs0g.JPEG.ju4349/%EC%BA%84%EB%B3%B4%EB%94%94%EC%95%84_%EC%88%98%ED%8F%89_%EB%A7%9E%EC%B6%98_%ED%9B%84.jpg?type=w800",
+                                        "https://mp-seoul-image-production-s3.mangoplate.com/mango_pick/1opyqrgnyw1ipe.jpg?fit=around|600:*&crop=600:*;*,*&output-format=jpg&output-quality=80",
+                                        "https://t1.daumcdn.net/cfile/tistory/99F6363359891F943B",
+                                        "https://datacdn.ibtravel.co.kr/files/2023/05/10114536/jje-00490-2-1.jpg",
+                                        "https://cdn.cctoday.co.kr/news/photo/202106/2144368_577455_2410.jpg",
+                                        "https://ak-d.tripcdn.com/images/1mi312224udcagpps6FB8_W_670_10000.jpg?proc=source/trip",
+                                        "https://phinf.pstatic.net/checkout.phinf/20191126_16/1574772152017D3oGo_JPEG/DDFA6470-AB72-44AB-90E5-F7EB31420795.jpeg",
+                                        "https://api.cdn.visitjeju.net/photomng/imgpath/202206/03/ddc76b48-8667-4cd9-bd18-2fa5d801310b.jpg",
+                                        "https://blog.kakaocdn.net/dn/o1KIw/btqu9mflPY6/rGk1mM3iugV1c6jj9Z3E80/img.jpg"
+                                    )
                                 )
                             }
                             composable(route = "modification") {
