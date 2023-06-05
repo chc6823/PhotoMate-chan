@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
     private val remoteHomeDataSource: RemoteHomeDataSource
-) : HomeRepository{
+) : HomeRepository {
     override suspend fun fetchCurrentLocation(): Result<Boolean> {
         TODO("Not yet implemented")
     }
