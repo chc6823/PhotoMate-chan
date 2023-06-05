@@ -25,7 +25,7 @@
             android:label="@string/title_activity_review"
             android:theme="@style/Theme.PhotoMate" />
         <activity
-            android:name=".presentation.screens.profile_modification.ProfileModificationActivity"
+            android:name=".presentation.screens.profileModification.ProfileModificationActivity"
             android:exported="false"
             android:label="@string/title_activity_profile_modification"
             android:theme="@style/Theme.PhotoMate" />
@@ -35,7 +35,7 @@
             android:label="@string/title_activity_main_my_page"
             android:theme="@style/Theme.PhotoMate" />
         <activity
-            android:name=".presentation.screens.Login.LoginActivity"
+            android:name=".presentation.screens.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.PhotoMate" />
@@ -45,7 +45,7 @@
             android:label="@string/title_activity_my_page"
             android:theme="@style/Theme.PhotoMate" />
         <activity
-            android:name=".presentation.screens.Splash.SplashActivity"
+            android:name=".presentation.screens.splash.SplashActivity"
             android:exported="true"
             android:label="@string/title_activity_splash"
             android:theme="@style/Theme.PhotoMate">

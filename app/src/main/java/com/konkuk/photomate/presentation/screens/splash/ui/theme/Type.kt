@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.Login.ui.theme
+package com.konkuk.photomate.presentation.screens.splash.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

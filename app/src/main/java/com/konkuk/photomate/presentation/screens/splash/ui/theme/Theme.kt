@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.Login.ui.theme
+package com.konkuk.photomate.presentation.screens.splash.ui.theme
 
 import android.app.Activity
 import android.os.Build

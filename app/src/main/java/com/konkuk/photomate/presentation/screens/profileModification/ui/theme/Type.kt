@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.profile_modification.ui.theme
+package com.konkuk.photomate.presentation.screens.profileModification.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

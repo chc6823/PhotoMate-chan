@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.profile_modification.ui.theme
+package com.konkuk.photomate.presentation.screens.login.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

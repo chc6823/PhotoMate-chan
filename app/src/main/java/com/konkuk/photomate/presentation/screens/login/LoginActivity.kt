@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.Login
+package com.konkuk.photomate.presentation.screens.login
 
 import android.os.Bundle
 import androidx.compose.foundation.Image
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.photomate.R
-import com.konkuk.photomate.presentation.screens.Login.ui.theme.PhotoMateTheme
+import com.konkuk.photomate.presentation.screens.login.ui.theme.PhotoMateTheme
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

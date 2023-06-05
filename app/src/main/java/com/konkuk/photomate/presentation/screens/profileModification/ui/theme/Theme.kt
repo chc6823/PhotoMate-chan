@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.profile_modification.ui.theme
+package com.konkuk.photomate.presentation.screens.profileModification.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.Splash
+package com.konkuk.photomate.presentation.screens.splash
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.konkuk.photomate.R
-import com.konkuk.photomate.presentation.screens.Splash.ui.theme.PhotoMateTheme
+import com.konkuk.photomate.presentation.screens.splash.ui.theme.PhotoMateTheme
 import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {

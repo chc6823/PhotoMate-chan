@@ -1,4 +1,4 @@
-package com.konkuk.photomate.presentation.screens.Splash.ui.theme
+package com.konkuk.photomate.presentation.screens.splash.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
