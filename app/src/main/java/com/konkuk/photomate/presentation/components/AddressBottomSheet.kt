@@ -145,6 +145,7 @@ fun AddressBottomSheet(
             contentAlignment = Alignment.Center
         ) {
             Text(
+                modifier = Modifier.clickable { onConfirmRequest() },
                 text = stringResource(id = R.string.request_matching),
                 style = TextStyle(
                     color = Color.Black,

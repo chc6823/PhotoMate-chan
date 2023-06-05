@@ -155,4 +155,6 @@ dependencies {
     androidTestImplementation(libs.android.test.runner)
 
     coreLibraryDesugaring(libs.desugar)
+
+    implementation("com.karumi:dexter:6.2.3")
 }

@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -39,11 +40,18 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.material.snackbar.Snackbar
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.konkuk.photomate.presentation.components.AddressBottomSheet
 import com.konkuk.photomate.presentation.components.LocationButton
 import com.konkuk.photomate.presentation.components.PhotoMateBottomBar
@@ -56,14 +64,51 @@ import com.konkuk.photomate.presentation.screens.notification.AlarmPopUp
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
 import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
+import com.konkuk.photomate.presentation.screens.searching.SearchingScreen
 import com.konkuk.photomate.ui.theme.PhotoMateTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
 import java.util.UUID
 
 @OptIn(ExperimentalMaterialApi::class)
 class MainActivity : ComponentActivity() {
+
+    private var hasBluetoothPermission by mutableStateOf(false)
+    private var socket: BluetoothSocket? = null
+
+    override fun onStart() {
+        super.onStart()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            Dexter.withContext(this)
+                .withPermissions(
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.BLUETOOTH_SCAN
+                )
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        hasBluetoothPermission = true
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
+                        token: PermissionToken?
+                    ) {
+                        // Display a Snackbar or some sort of feedback for the user to explain why we need the permission.
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            "Bluetooth permissions are needed for this app to function properly",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+
+                        token?.continuePermissionRequest()
+                    }
+                })
+                .check()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -81,8 +126,8 @@ class MainActivity : ComponentActivity() {
                 var lastBackPressedTime by remember { mutableStateOf(0L) }
 
                 val homeViewModel = hiltViewModel<HomeViewModel>()
-                var hasBluetoothPermission by remember { mutableStateOf(false) }
                 var isPopUpAlarmShown by remember { mutableStateOf(false) }
+                var currentAddress by remember { mutableStateOf("서울 광진구 능동로 120") }
 
                 SideEffect {
                     systemUiController.setSystemBarsColor(
@@ -120,14 +165,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                LaunchedEffect(Unit) {
-                    // 블루투스 연결 권한 확인
-                    hasBluetoothPermission = ContextCompat.checkSelfPermission(
-                        this@MainActivity,
-                        Manifest.permission.BLUETOOTH_CONNECT
-                    ) == PackageManager.PERMISSION_GRANTED
-                }
-
                 if (isPopUpAlarmShown) {
                     AlarmPopUp(
                         name = "건국이", // 상대방에게 넘길 나의 이름
@@ -137,6 +174,7 @@ class MainActivity : ComponentActivity() {
                             isPopUpAlarmShown = false
                         },
                         onConfirmRequest = {
+                            isPopUpAlarmShown = false
                             navController.navigate("matching")
                         }
                     )
@@ -148,9 +186,12 @@ class MainActivity : ComponentActivity() {
                     sheetContent = {
                         if (currentRoute == Screen.Home.route) {
                             AddressBottomSheet(
-                                address = "경북 포항시 북구 두호동 685-1",
-                                onConfirmRequest = {},
+                                address = currentAddress,
+                                onConfirmRequest = {
+                                    navController.navigate("searching?address=${currentAddress}")
+                                },
                                 onFindAndConnectClosestDevice = {
+                                    Timber.tag("onseok").d("클릭 됨")
                                     findAndConnectClosestDevice(
                                         context = this@MainActivity,
                                         hasPermission = hasBluetoothPermission,
@@ -176,7 +217,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         bottomBar = {
-                            if (currentRoute != "modification") {
+                            if (currentRoute != "modification"
+                                && currentRoute != "matching"
+                                && currentRoute?.contains("searching") != true
+                            ) {
                                 PhotoMateBottomBar(navController = navController)
                             }
                         },
@@ -243,57 +287,95 @@ class MainActivity : ComponentActivity() {
                             composable(route = "modification") {
                                 ProfileModificationScreen(navController = navController)
                             }
+                            composable(
+                                route = "searching?address={address}",
+                                arguments = listOf(
+                                    navArgument("address") {
+                                        defaultValue = ""
+                                        type = NavType.StringType
+                                    }
+                                )
+                            ) {
+                                val address = navBackStackEntry?.arguments?.getString("address")
+                                address?.let {
+                                    SearchingScreen(
+                                        navController = navController,
+                                        address = it
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
-private fun findAndConnectClosestDevice(
-    context: Context,
-    hasPermission: Boolean,
-    onShowModalBottomSheet: () -> Unit,
-    onShowToastMessage: (String) -> Unit,
-    onShowAlarm: () -> Unit
-) {
-    val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    val bluetoothAdapter = bluetoothManager.adapter
-    val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+    private fun findAndConnectClosestDevice(
+        context: Context,
+        hasPermission: Boolean,
+        onShowModalBottomSheet: () -> Unit,
+        onShowToastMessage: (String) -> Unit,
+        onShowAlarm: () -> Unit
+    ) {
+        val bluetoothManager =
+            context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter = bluetoothManager.adapter
+        val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
-    // Bluetooth 지원 여부 확인
-    if (bluetoothAdapter == null) {
-        onShowToastMessage("This device does not support Bluetooth.")
-        return
-    }
+        // Bluetooth 지원 여부 확인
+        if (bluetoothAdapter == null) {
+            onShowToastMessage("This device does not support Bluetooth.")
+            Timber.tag("onseok").d("This device does not support Bluetooth.")
+            return
+        }
 
-    // Bluetooth 활성화 여부 확인
-    if (!bluetoothAdapter.isEnabled) {
-        onShowToastMessage("Please enable Bluetooth.")
-        return
-    }
+        // Bluetooth 활성화 여부 확인
+        if (!bluetoothAdapter.isEnabled) {
+            onShowToastMessage("Please enable Bluetooth.")
+            Timber.tag("onseok").d("Please enable Bluetooth.")
+            return
+        }
 
-    if (hasPermission) {
-        // 페어링된 장치 중에서 가까운 상대방 찾기
-        try {
-            val pairedDevices = bluetoothAdapter.bondedDevices
-            if (pairedDevices.isEmpty()) {
-                onShowToastMessage("No paired devices found.")
-                return
+        if (hasPermission) {
+            // 페어링된 장치 중에서 가까운 상대방 찾기
+            try {
+                val pairedDevices = bluetoothAdapter.bondedDevices
+                if (pairedDevices.isEmpty()) {
+                    Timber.tag("onseok").d("No paired devices found.")
+                    onShowToastMessage("No paired devices found.")
+                    return
+                }
+
+                pairedDevices?.forEach { device ->
+                    Timber.tag("onseok").d(device.name)
+                    socket = device.createRfcommSocketToServiceRecord(uuid)
+
+                    // Check if the device is already connected
+                    if (!socket?.isConnected!!) {
+                        // Run the blocking connect() call on another thread to avoid freezing the app
+                        Thread {
+                            try {
+                                socket?.connect()
+                            } catch (e: IOException) {
+                                Timber.e(e, "Error occurred while connecting to device.")
+                            }
+                        }.start()
+                    }
+
+                    onShowModalBottomSheet()
+                    onShowAlarm()
+                    return
+                }
+            } catch (securityException: SecurityException) {
+                Timber.e(securityException)
+            } finally {
+                try {
+                    socket?.close()
+                } catch (e: IOException) {
+                    Timber.e(e, "Error occurred while closing the socket.")
+                }
             }
-
-            pairedDevices?.forEach { device ->
-                // 상대방에게 블루투스로 연결하고 AlarmPopUp() 함수 호출
-                val socket: BluetoothSocket? = device.createRfcommSocketToServiceRecord(uuid)
-                socket?.connect() // 블루투스 연결
-                onShowModalBottomSheet()
-                Timber.tag("onseok").d(device.toString())
-                onShowAlarm()
-                return
-            }
-        } catch (securityException: SecurityException) {
-            Timber.e(securityException)
         }
     }
 }

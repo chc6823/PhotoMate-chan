@@ -62,7 +62,9 @@ fun MatchingScreen(
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    modifier = Modifier.align(Alignment.End),
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .clickable { navController.navigateUp() },
                     text = "거절하기",
                     fontWeight = FontWeight.Bold
                 )
