@@ -75,7 +75,7 @@ fun ReviewScreen() {
                     .fillMaxWidth()
                     .height(screenHeight * 0.07f),
                 fontWeight = FontWeight.Bold,
-                fontSize = TextUnit((screenWidth * 0.06f).value, TextUnitType.Sp),
+                fontSize = TextUnit((screenWidth * 0.05f).value, TextUnitType.Sp),
                 textAlign = TextAlign.Center
             )
             //------------

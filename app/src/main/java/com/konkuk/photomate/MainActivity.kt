@@ -54,6 +54,7 @@ import com.konkuk.photomate.presentation.screens.home.HomeViewModel
 import com.konkuk.photomate.presentation.screens.matching.MatchingScreen
 import com.konkuk.photomate.presentation.screens.notification.AlarmPopUp
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
+import com.konkuk.photomate.presentation.screens.profile.ProfileReviewScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
 import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
 import com.konkuk.photomate.ui.theme.PhotoMateTheme
@@ -228,9 +229,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(route = Screen.Profile.route) {
                                 ProfileScreen(
-                                    onNavigateToModification = {
-                                        navController.navigate("modification")
-                                    }
+                                    navController = navController
                                 )
                             }
                             composable(route = "matching") {
@@ -242,6 +241,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(route = "modification") {
                                 ProfileModificationScreen(navController = navController)
+                            }
+                            composable(route = "profileReview") {
+                                ProfileReviewScreen(navController = navController)
                             }
                         }
                     }
