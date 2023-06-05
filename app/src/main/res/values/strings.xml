@@ -3,4 +3,10 @@
     <string name="move_pin_to_where_you_want_to_photomate">핀을 옮겨 사진 촬영 교환을 원하는 장소를 설정해주세요.</string>
     <string name="set_to_current_locaton">현위치로 설정하기</string>
     <string name="request_matching">매칭 요청하기</string>
+    <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_profile_modification">Profile Modification</string>
+    <string name="title_activity_main_my_page">Main My Page</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_my_page">My Page</string>
+    <string name="title_activity_splash">Splash</string>
 </resources>
