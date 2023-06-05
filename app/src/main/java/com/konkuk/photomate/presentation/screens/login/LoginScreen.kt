@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.konkuk.photomate.R
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLoginButtonClick: () -> Unit
+) {
 
     val kakako_login_image = painterResource(id = R.drawable.kakao_login_button)
     val app_icon: Painter = painterResource(id = R.drawable.app_icon)
@@ -53,7 +55,9 @@ fun LoginScreen() {
                 modifier = Modifier
                     .fillMaxWidth(0.8f) // 전체 너비의 80%를 차지합니다.
                     .fillMaxHeight(0.15f) // 전체 높이의 15%를 차지합니다.
-                    .clickable { /* 클릭 시 수행할 작업 */ }
+                    .clickable {
+                        onLoginButtonClick()
+                    }
                     .background(color = Color.Transparent)
                     .graphicsLayer {
                         clip = true
@@ -73,5 +77,7 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    LoginScreen()
+    LoginScreen(
+        onLoginButtonClick = {}
+    )
 }

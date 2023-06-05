@@ -6,7 +6,6 @@ import android.Manifest
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -37,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
@@ -59,6 +57,7 @@ import com.konkuk.photomate.presentation.components.PhotoMateFloatingActionButto
 import com.konkuk.photomate.presentation.components.Screen
 import com.konkuk.photomate.presentation.screens.home.HomeScreen
 import com.konkuk.photomate.presentation.screens.home.HomeViewModel
+import com.konkuk.photomate.presentation.screens.login.LoginScreen
 import com.konkuk.photomate.presentation.screens.matching.MatchingScreen
 import com.konkuk.photomate.presentation.screens.notification.AlarmPopUp
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
@@ -67,17 +66,24 @@ import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
 import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
 import com.konkuk.photomate.presentation.screens.searching.SearchingScreen
 import com.konkuk.photomate.ui.theme.PhotoMateTheme
+import com.konkuk.photomate.util.KakaoLoginManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import java.util.UUID
+import javax.inject.Inject
 
 @OptIn(ExperimentalMaterialApi::class)
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private var hasBluetoothPermission by mutableStateOf(false)
     private var socket: BluetoothSocket? = null
+
+    @Inject
+    lateinit var kakaoLoginManager: KakaoLoginManager
 
     override fun onStart() {
         super.onStart()
@@ -221,6 +227,7 @@ class MainActivity : ComponentActivity() {
                             if (currentRoute != "modification"
                                 && currentRoute != "matching"
                                 && currentRoute?.contains("searching") != true
+                                && currentRoute != "login"
                             ) {
                                 PhotoMateBottomBar(navController = navController)
                             }
@@ -252,7 +259,7 @@ class MainActivity : ComponentActivity() {
                         NavHost(
                             modifier = Modifier.padding(padding),
                             navController = navController,
-                            startDestination = Screen.Home.route
+                            startDestination = "login"
                         ) {
                             composable(route = Screen.Home.route) {
                                 val state by homeViewModel.state.collectAsStateWithLifecycle()
@@ -319,6 +326,17 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(route = "profileReview") {
                                 ProfileReviewScreen(navController = navController)
+                            }
+                            composable(route = "login") {
+                                LoginScreen(
+                                    onLoginButtonClick = {
+                                        Timber.tag("kakao_login").d("클릭")
+                                        kakaoLoginManager.startKakaoLogin {
+                                            Timber.tag("kakao_login").d(it)
+                                            navController.navigate(Screen.Home.route)
+                                        }
+                                    }
+                                )
                             }
                         }
                     }
