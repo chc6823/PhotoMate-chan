@@ -85,12 +85,7 @@ dependencies {
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.datastore)
     implementation(libs.bundles.room)
-//    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-//    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-//    implementation("androidx.compose.ui:ui")
-//    implementation("androidx.compose.ui:ui-graphics")
-//    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-//    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    implementation(libs.androidx.core.splashscreen)
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
 

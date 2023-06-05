@@ -1,9 +1,6 @@
 package com.konkuk.photomate.presentation.screens.mypage
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -34,26 +31,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.konkuk.photomate.R
 import com.konkuk.photomate.presentation.components.Screen
-import com.konkuk.photomate.presentation.screens.mypage.ui.theme.PhotoMateTheme
 
-class MyPageActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PhotoMateTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    //MyPageScreen()
-                }
-            }
-        }
-    }
-}
 @Composable
-fun MyPageScreen(){
+fun MyPageScreen() {
     val navController = rememberNavController()
     val hoonieimage: Painter = painterResource(id = R.drawable.hoonie)
     val profilechangebutton: Painter = painterResource(id = R.drawable.profilechangebutton)
@@ -66,7 +46,8 @@ fun MyPageScreen(){
 
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(Color.White)
     ) {
         // 다른 컴포넌트들
@@ -98,7 +79,7 @@ fun MyPageScreen(){
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
                     horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
-                ){
+                ) {
                     Image(
                         painter = hoonieimage,
                         contentDescription = "Profile Picture",
@@ -124,7 +105,7 @@ fun MyPageScreen(){
                     modifier = Modifier
                         .fillMaxWidth(0.7f) // 전체 이미지 크기 width의 20%를 차지하도록 width 설정
                         .height(50.dp) // 원하는 높이로 설정
-                        //.padding(vertical = BoxpaddingDp) // top, bottom 패딩을 추가
+                    //.padding(vertical = BoxpaddingDp) // top, bottom 패딩을 추가
                 ) {
                     Image(
                         painter = profilechangebutton,
@@ -146,63 +127,26 @@ fun MyPageScreen(){
                     .fillMaxHeight(0.1f)
                     .padding(start = screenWidth * 0.025f, end = screenWidth * 0.025f),
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
                     horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
-                ){
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.matching),
                         contentDescription = "matchingimage",
                         // menu icon과 menu 사이에 약 2% 크기의 padding 설정
-                        Modifier.padding(end = screenWidth * 0.03f)
-                                .fillMaxHeight()
+                        Modifier
+                            .padding(end = screenWidth * 0.03f)
+                            .fillMaxHeight()
                     )
                     Text(
                         text = "매칭 내역",
                         style = TextStyle(
                             fontSize = 30.sp
                         ),
-                        modifier = Modifier.fillMaxHeight()
-                                            .padding(
-                                                top = screenWidth * 0.03f,
-                                                bottom = screenWidth * 0.03f
-                                            )
-                                            .align(Alignment.CenterVertically)
-                    )
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.mypage_arrow),
-                    contentDescription = "mypagearrow",
-                    modifier = Modifier.fillMaxHeight()
-                        .clickable { /* Handle Click Here */ }
-                )
-            }
-            //--------
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.1f)
-                    .padding(start = screenWidth * 0.025f, end = screenWidth * 0.025f),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Row(
-                    // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
-                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.moabogi),
-                        contentDescription = "matchingimage",
-                        // menu icon과 menu 사이에 약 2% 크기의 padding 설정
-                        Modifier.padding(end = screenWidth * 0.03f)
+                        modifier = Modifier
                             .fillMaxHeight()
-                    )
-                    Text(
-                        text = "모아 보기",
-                        style = TextStyle(
-                            fontSize = 30.sp
-                        ),
-                        modifier = Modifier.fillMaxHeight()
                             .padding(
                                 top = screenWidth * 0.03f,
                                 bottom = screenWidth * 0.03f
@@ -213,7 +157,8 @@ fun MyPageScreen(){
                 Image(
                     painter = painterResource(id = R.drawable.mypage_arrow),
                     contentDescription = "mypagearrow",
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier
+                        .fillMaxHeight()
                         .clickable { /* Handle Click Here */ }
                 )
             }
@@ -224,16 +169,59 @@ fun MyPageScreen(){
                     .fillMaxHeight(0.1f)
                     .padding(start = screenWidth * 0.025f, end = screenWidth * 0.025f),
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
                 Row(
                     // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
                     horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
-                ){
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.moabogi),
+                        contentDescription = "matchingimage",
+                        // menu icon과 menu 사이에 약 2% 크기의 padding 설정
+                        Modifier
+                            .padding(end = screenWidth * 0.03f)
+                            .fillMaxHeight()
+                    )
+                    Text(
+                        text = "모아 보기",
+                        style = TextStyle(
+                            fontSize = 30.sp
+                        ),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(
+                                top = screenWidth * 0.03f,
+                                bottom = screenWidth * 0.03f
+                            )
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+                Image(
+                    painter = painterResource(id = R.drawable.mypage_arrow),
+                    contentDescription = "mypagearrow",
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .clickable { /* Handle Click Here */ }
+                )
+            }
+            //--------
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.1f)
+                    .padding(start = screenWidth * 0.025f, end = screenWidth * 0.025f),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
+                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f)
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.version_history),
                         contentDescription = "matchingimage",
                         // menu icon과 menu 사이에 약 2% 크기의 padding 설정
-                        Modifier.padding(end = screenWidth * 0.03f)
+                        Modifier
+                            .padding(end = screenWidth * 0.03f)
                             .fillMaxHeight()
                     )
                     Text(
@@ -241,7 +229,8 @@ fun MyPageScreen(){
                         style = TextStyle(
                             fontSize = 30.sp
                         ),
-                        modifier = Modifier.fillMaxHeight()
+                        modifier = Modifier
+                            .fillMaxHeight()
                             .padding(
                                 top = screenWidth * 0.02f,
                                 bottom = screenWidth * 0.02f
@@ -252,7 +241,8 @@ fun MyPageScreen(){
                 Image(
                     painter = painterResource(id = R.drawable.mypage_arrow),
                     contentDescription = "mypagearrow",
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier
+                        .fillMaxHeight()
                         .clickable { /* Handle Click Here */ }
                 )
             }
@@ -270,7 +260,7 @@ fun MyPageScreen(){
 @Composable
 //overload
 fun PhotoMateBottomBar(
-    navController: NavController,modifier: Modifier
+    navController: NavController, modifier: Modifier
 ) {
     Surface(modifier = modifier.fillMaxWidth()) {
         // PhotoMateBottomBar의 구현 부분
@@ -318,10 +308,9 @@ fun PhotoMateBottomBar(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview3() {
-    PhotoMateTheme {
-        MyPageScreen()
-    }
+fun MyPageScreenPreview() {
+    MyPageScreen()
 }

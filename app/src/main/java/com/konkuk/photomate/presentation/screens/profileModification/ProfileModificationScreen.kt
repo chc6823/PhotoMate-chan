@@ -34,21 +34,22 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.konkuk.photomate.R
 import com.konkuk.photomate.presentation.screens.mypage.PhotoMateBottomBar
-import com.konkuk.photomate.presentation.screens.profileModification.ui.theme.PhotoMateTheme
 
 @Composable
 fun ProfileModificationScreen(
     navController: NavController
-){
+) {
 //    val navController = rememberNavController()
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
 
-    Surface(){
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)){
+    Surface() {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
             Column(
                 Modifier.fillMaxSize()
             ) {
@@ -168,7 +169,7 @@ fun ProfileModificationScreen(
 
 @Composable
 fun PhotoMateTextField() {
-    var text by remember {mutableStateOf("")}
+    var text by remember { mutableStateOf("") }
     OutlinedTextField(
         value = text,
         onValueChange = { text = it }
@@ -178,8 +179,8 @@ fun PhotoMateTextField() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview2() {
-    PhotoMateTheme {
-        ProfileModificationScreen(navController = rememberNavController())
-    }
+fun ProfileModificationScreenPreview() {
+    ProfileModificationScreen(
+        navController = rememberNavController()
+    )
 }

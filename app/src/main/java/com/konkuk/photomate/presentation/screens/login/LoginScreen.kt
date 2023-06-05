@@ -1,9 +1,6 @@
 package com.konkuk.photomate.presentation.screens.login
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,34 +17,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.photomate.R
-import com.konkuk.photomate.presentation.screens.login.ui.theme.PhotoMateTheme
-
-class LoginActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PhotoMateTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color(0xFFFFFF) // White
-                ) {
-                    loginscreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun loginscreen(){
+fun LoginScreen() {
 
     val kakako_login_image = painterResource(id = R.drawable.kakao_login_button)
     val app_icon: Painter = painterResource(id = R.drawable.app_icon)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color =  Color(0xFFFFFF) // White
+        color = Color(0xFFFFFF) // White
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -87,15 +66,12 @@ fun loginscreen(){
                     contentScale = ContentScale.FillBounds
                 )
             }
-
-
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    PhotoMateTheme {
-      loginscreen()
-    }
+    LoginScreen()
 }

@@ -1,9 +1,6 @@
 package com.konkuk.photomate.presentation.screens.review
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -41,28 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.konkuk.photomate.R
-import com.konkuk.photomate.presentation.screens.review.ui.theme.PhotoMateTheme
-
-class ReviewActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PhotoMateTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-
-                }
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun reviewscreen(){
+fun ReviewScreen() {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val rating = remember { mutableStateOf(0f) } // initialize with your initial rating
@@ -164,7 +142,6 @@ fun reviewscreen(){
             }
 
 
-
         }
     }
 }
@@ -187,8 +164,6 @@ fun RatingBar(rating: MutableState<Float>) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview3() {
-    PhotoMateTheme {
-        reviewscreen()
-    }
+fun ReviewScreenPreview() {
+    ReviewScreen()
 }
