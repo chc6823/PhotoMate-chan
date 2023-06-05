@@ -30,15 +30,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.konkuk.photomate.R
 import com.konkuk.photomate.presentation.components.Screen
 
 @Composable
 fun ProfileScreen(
-    onNavigateToModification: () -> Unit
+    navController: NavController
 ) {
     val hoonieimage: Painter = painterResource(id = R.drawable.hoonie)
-    val profilechangebutton: Painter = painterResource(id = R.drawable.profilechangebutton)
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
@@ -61,7 +61,7 @@ fun ProfileScreen(
                 text = "내 정보",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
+                    fontSize = 20.sp
                 ),
                 modifier = Modifier.padding(start = 16.dp) // 왼쪽 padding
             )
@@ -95,29 +95,10 @@ fun ProfileScreen(
                         text = "후니쓰",
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 30.sp
+                            fontSize = 25.sp
                         ),
                         // 텍스트를 수직 가운데로 정렬하기 위해 상하 padding 추가
                         modifier = Modifier.padding(vertical = TextpaddingDp)
-                    )
-
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f) // 전체 이미지 크기 width의 20%를 차지하도록 width 설정
-                        .height(50.dp) // 원하는 높이로 설정
-                    //.padding(vertical = BoxpaddingDp) // top, bottom 패딩을 추가
-                ) {
-                    Image(
-                        painter = profilechangebutton,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                onNavigateToModification()
-                            },
-                        contentScale = ContentScale.FillBounds
                     )
                 }
             }
@@ -125,51 +106,7 @@ fun ProfileScreen(
             //-----
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            //매칭내역,모아보기,버전정보
-            //매칭내역
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.1f)
-                    .padding(start = screenWidth * 0.025f, end = screenWidth * 0.025f),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    // 이미지와 텍스트 사이에 간격을 주기 위해 spacedBy 사용
-                    horizontalArrangement = Arrangement.spacedBy(screenWidth * 0.01f),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.matching),
-                        contentDescription = "matchingimage",
-                        // menu icon과 menu 사이에 약 2% 크기의 padding 설정
-                        Modifier
-                            .padding(end = screenWidth * 0.03f)
-                            .fillMaxHeight()
-                    )
-                    Text(
-                        text = "매칭 내역",
-                        style = TextStyle(
-                            fontSize = 20.sp
-                        ),
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(
-                                top = screenWidth * 0.03f,
-                                bottom = screenWidth * 0.03f
-                            )
-                            .align(Alignment.CenterVertically)
-                    )
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.mypage_arrow),
-                    contentDescription = "mypagearrow",
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .clickable { /* Handle Click Here */ }
-                )
-            }
-            //--------
+            //모아보기,버전정보
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -209,7 +146,9 @@ fun ProfileScreen(
                     contentDescription = "mypagearrow",
                     modifier = Modifier
                         .fillMaxHeight()
-                        .clickable { /* Handle Click Here */ }
+                        .clickable {
+                            navController.navigate("profileReview")
+                        }
                 )
             }
             //--------
@@ -241,6 +180,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(
+                                start = screenWidth * 0.008f,
                                 top = screenWidth * 0.02f,
                                 bottom = screenWidth * 0.02f
                             )
@@ -255,7 +195,6 @@ fun ProfileScreen(
                         .clickable { /* Handle Click Here */ }
                 )
             }
-            //-------
         }
     }
 }
@@ -263,7 +202,6 @@ fun ProfileScreen(
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(
-        onNavigateToModification = {}
-    )
+    val navController = rememberNavController()
+    ProfileScreen(navController = navController)
 }

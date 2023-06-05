@@ -62,6 +62,7 @@ import com.konkuk.photomate.presentation.screens.home.HomeViewModel
 import com.konkuk.photomate.presentation.screens.matching.MatchingScreen
 import com.konkuk.photomate.presentation.screens.notification.AlarmPopUp
 import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
+import com.konkuk.photomate.presentation.screens.profile.ProfileReviewScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
 import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
 import com.konkuk.photomate.presentation.screens.searching.SearchingScreen
@@ -272,9 +273,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(route = Screen.Profile.route) {
                                 ProfileScreen(
-                                    onNavigateToModification = {
-                                        navController.navigate("modification")
-                                    }
+                                    navController = navController
                                 )
                             }
                             composable(route = "matching") {
@@ -287,6 +286,7 @@ class MainActivity : ComponentActivity() {
                             composable(route = "modification") {
                                 ProfileModificationScreen(navController = navController)
                             }
+<<<<<<< HEAD
                             composable(
                                 route = "searching?address={address}",
                                 arguments = listOf(
@@ -303,6 +303,10 @@ class MainActivity : ComponentActivity() {
                                         address = it
                                     )
                                 }
+=======
+                            composable(route = "profileReview") {
+                                ProfileReviewScreen(navController = navController)
+>>>>>>> origin/main
                             }
                         }
                     }
