@@ -61,7 +61,7 @@ fun ProfileScreen(
                 text = "내 정보",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp
+                    fontSize = 20.sp
                 ),
                 modifier = Modifier.padding(start = 16.dp) // 왼쪽 padding
             )
@@ -95,30 +95,12 @@ fun ProfileScreen(
                         text = "후니쓰",
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 30.sp
+                            fontSize = 20.sp
                         ),
                         // 텍스트를 수직 가운데로 정렬하기 위해 상하 padding 추가
                         modifier = Modifier.padding(vertical = TextpaddingDp)
                     )
 
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f) // 전체 이미지 크기 width의 20%를 차지하도록 width 설정
-                        .height(50.dp) // 원하는 높이로 설정
-                    //.padding(vertical = BoxpaddingDp) // top, bottom 패딩을 추가
-                ) {
-                    Image(
-                        painter = profilechangebutton,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                onNavigateToModification()
-                            },
-                        contentScale = ContentScale.FillBounds
-                    )
                 }
             }
 
@@ -241,6 +223,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(
+                                start = screenWidth * 0.008f,
                                 top = screenWidth * 0.02f,
                                 bottom = screenWidth * 0.02f
                             )
