@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,13 +39,20 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.konkuk.photomate.R
 import com.konkuk.photomate.util.components.PhotoMateLoading
+import kotlinx.coroutines.delay
 
 @Composable
 fun SearchingScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    address: String
+    address: String,
+    onNavigateToMatching: () -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        delay(10000)
+        onNavigateToMatching()
+    }
+
     Column {
         Column(
             modifier = modifier
@@ -176,6 +184,7 @@ fun SearchingScreen(
 fun SearchingScreenPreview() {
     SearchingScreen(
         navController = rememberNavController(),
-        address = "건대"
+        address = "건대",
+        onNavigateToMatching = {}
     )
 }

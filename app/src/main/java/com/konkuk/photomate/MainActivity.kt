@@ -299,7 +299,10 @@ class MainActivity : ComponentActivity() {
                                 address?.let {
                                     SearchingScreen(
                                         navController = navController,
-                                        address = it
+                                        address = it,
+                                        onNavigateToMatching = {
+                                            navController.navigate("matching")
+                                        }
                                     )
                                 }
                             }
