@@ -286,7 +286,6 @@ class MainActivity : ComponentActivity() {
                             composable(route = "modification") {
                                 ProfileModificationScreen(navController = navController)
                             }
-<<<<<<< HEAD
                             composable(
                                 route = "searching?address={address}",
                                 arguments = listOf(
@@ -303,10 +302,9 @@ class MainActivity : ComponentActivity() {
                                         address = it
                                     )
                                 }
-=======
+                            }
                             composable(route = "profileReview") {
                                 ProfileReviewScreen(navController = navController)
->>>>>>> origin/main
                             }
                         }
                     }
