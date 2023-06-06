@@ -69,6 +69,8 @@ fun ReviewScreen(
             results = it
         }
 
+    var text by remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -204,8 +206,8 @@ fun ReviewScreen(
             Spacer(modifier = Modifier.height((screenHeight * 0.015f)))
 
             TextField(
-                value = "",
-                onValueChange = { /*TODO*/ },
+                value = text,
+                onValueChange = { text = it },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .height(screenHeight * 0.2f)
