@@ -2,8 +2,11 @@ package com.konkuk.photomate.presentation.screens.matching
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.provider.MediaStore
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,19 +32,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -55,9 +62,16 @@ fun MatchingScreen(
     name: String,
     rating: Float,
     imageUrl: String = "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2021/07/26/bbe2deec-47db-4866-a8ce-abb39a0a181d.jpg",
-    representativeImages: List<String> = emptyList()
+    representativeImages: List<String> = emptyList(),
+    onNavigateToReviewScreen: () -> Unit
 ) {
-    val context = LocalContext.current
+    var result by remember { mutableStateOf<Bitmap?>(null) } // 비트맵 잘 넘어오나 테스트용
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.TakePicturePreview()) {
+            result = it
+            onNavigateToReviewScreen()
+        }
+
     Column {
         Box(
             modifier = modifier
@@ -153,8 +167,9 @@ fun MatchingScreen(
                                     .padding(4.dp),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
                                 ) {
                                     AsyncImage(
                                         modifier = Modifier.fillMaxSize(),
@@ -175,7 +190,7 @@ fun MatchingScreen(
                 .fillMaxWidth()
                 .background(color = colorResource(id = R.color.main_color))
                 .clickable {
-                    openCameraScreen(context) // error
+                    launcher.launch(null)
                 },
             contentAlignment = Alignment.Center
         ) {
@@ -196,13 +211,6 @@ fun MatchingScreen(
     }
 }
 
-fun openCameraScreen(
-    context: Context
-) {
-    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    context.startActivity(intent)
-}
-
 @Preview
 @Composable
 fun MatchingScreenPreview() {
@@ -211,5 +219,6 @@ fun MatchingScreenPreview() {
         name = "김지인",
         rating = 2.3f,
         imageUrl = "http://117.16.142.55/wordpress/wp-content/uploads/2014/11/img_02.jpg",
+        onNavigateToReviewScreen = {}
     )
 }

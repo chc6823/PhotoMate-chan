@@ -126,38 +126,38 @@ fun SearchingScreen(
                 )
             )
             Spacer(modifier = Modifier.height(50.dp))
-            Text(
-                text = "근처 2명의 포토메이트에게 알람을 보냈어요.",
-                style = TextStyle(
-                    color = Color.LightGray
-                )
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Surface(
-                modifier = Modifier
-                    .height(60.dp)
-                    .fillMaxWidth(0.75f),
-                shape = RoundedCornerShape(20.dp),
-                color = Color.White,
-                border = BorderStroke(width = 2.dp, color = colorResource(id = R.color.main_color))
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier.size(50.dp),
-                        painter = painterResource(id = R.drawable.ic_logo),
-                        contentDescription = "포토메이트 로고"
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Icon(
-                        modifier = Modifier.size(50.dp),
-                        painter = painterResource(id = R.drawable.ic_logo),
-                        contentDescription = "포토메이트 로고"
-                    )
-                }
-            }
+//            Text(
+//                text = "근처 2명의 포토메이트에게 알람을 보냈어요.",
+//                style = TextStyle(
+//                    color = Color.LightGray
+//                )
+//            )
+//            Spacer(modifier = Modifier.height(12.dp))
+//            Surface(
+//                modifier = Modifier
+//                    .height(60.dp)
+//                    .fillMaxWidth(0.75f),
+//                shape = RoundedCornerShape(20.dp),
+//                color = Color.White,
+//                border = BorderStroke(width = 2.dp, color = colorResource(id = R.color.main_color))
+//            ) {
+//                Row(
+//                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Icon(
+//                        modifier = Modifier.size(50.dp),
+//                        painter = painterResource(id = R.drawable.ic_logo),
+//                        contentDescription = "포토메이트 로고"
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    Icon(
+//                        modifier = Modifier.size(50.dp),
+//                        painter = painterResource(id = R.drawable.ic_logo),
+//                        contentDescription = "포토메이트 로고"
+//                    )
+//                }
+//            }
         }
         Box(
             modifier = Modifier

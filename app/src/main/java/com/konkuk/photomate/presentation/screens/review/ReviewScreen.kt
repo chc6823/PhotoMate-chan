@@ -1,5 +1,9 @@
 package com.konkuk.photomate.presentation.screens.review
 
+import android.graphics.Bitmap
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
@@ -25,9 +34,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -38,16 +49,25 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import coil.compose.rememberImagePainter
 import com.konkuk.photomate.R
 import com.willy.ratingbar.ScaleRatingBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReviewScreen() {
+fun ReviewScreen(
+    onNavigateToHome: () -> Unit
+) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val rating by remember { mutableStateOf(0f) } // initialize with your initial rating
+
+    var results by remember { mutableStateOf<List<Uri>?>(null) } // 비트맵 잘 넘어오나 테스트용
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetMultipleContents()) {
+            results = it
+        }
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -64,8 +84,8 @@ fun ReviewScreen() {
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Image(
-                    painter = painterResource(R.drawable.x_button),
-                    contentDescription = "X_button",
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "close button",
                     modifier = Modifier
                         .width(screenWidth * 0.07f)
                         .fillMaxHeight()
@@ -139,7 +159,17 @@ fun ReviewScreen() {
                         .height(screenHeight * 0.14f)
                         .background(Color(0xFFD9D9D9), RoundedCornerShape(10.dp))
                         .padding(12.dp)
-                ) {}
+                        .clickable {
+                            launcher.launch("image/*")
+                        }
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = rememberImagePainter(data = results?.first()),
+                        contentDescription = "My image",
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Spacer(modifier = Modifier.width((screenWidth * 0.02f)))
                 Box(
                     modifier = Modifier
@@ -147,7 +177,14 @@ fun ReviewScreen() {
                         .height(screenHeight * 0.14f)
                         .background(Color(0xFFD9D9D9), RoundedCornerShape(10.dp))
                         .padding(12.dp)
-                ) {}
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = rememberImagePainter(data = results?.get(1)),
+                        contentDescription = "My image",
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Spacer(modifier = Modifier.width((screenWidth * 0.02f)))
                 Box(
                     modifier = Modifier
@@ -155,7 +192,14 @@ fun ReviewScreen() {
                         .height(screenHeight * 0.14f)
                         .background(Color(0xFFD9D9D9), RoundedCornerShape(10.dp))
                         .padding(12.dp)
-                ) {}
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = rememberImagePainter(data = results?.last()),
+                        contentDescription = "My image",
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
             Spacer(modifier = Modifier.height((screenHeight * 0.015f)))
 
@@ -187,7 +231,10 @@ fun ReviewScreen() {
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(0.4f),
+                            .fillMaxHeight(0.4f)
+                            .clickable {
+                                onNavigateToHome()
+                            },
                         fontSize = TextUnit((screenHeight * 0.03f).value, TextUnitType.Sp)
                     )
                 }
@@ -200,5 +247,7 @@ fun ReviewScreen() {
 @Preview(showBackground = true)
 @Composable
 fun ReviewScreenPreview() {
-    ReviewScreen()
+    ReviewScreen(
+        onNavigateToHome = {}
+    )
 }

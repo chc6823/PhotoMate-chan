@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -21,13 +23,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.konkuk.photomate.R
 
 @Composable
@@ -65,28 +72,33 @@ fun AlarmPopUp(
                             .padding(bottom = 14.dp)
                             .align(Alignment.CenterHorizontally)
                     )
-                    Row {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
-                            contentDescription = null,
+                    Row(
+                        modifier = Modifier.padding(start = 20.dp)
+                    ) {
+                        AsyncImage(
                             modifier = Modifier
-                                .size(60.dp)
-                                .padding(top = 2.dp, end = 8.dp, start = 9.dp)
+                                .size(50.dp)
+                                .clip(CircleShape),
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2021/07/26/bbe2deec-47db-4866-a8ce-abb39a0a181d.jpg")
+                                .crossfade(true)
+                                .build(),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = "프로필 사진"
                         )
-                        Column() {
-                            Text(
-                                text = name,
-                                fontSize = 12.sp,
-                                modifier = Modifier.padding(bottom = 2.dp)
-                            )
-                            Text(
-                                text = address,
-                                fontSize = 18.sp,
-                                modifier = Modifier.padding(bottom = 2.dp)
-                            )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
                             Row(
                                 modifier = modifier
                             ) {
+                                Text(
+                                    text = name,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(bottom = 2.dp),
+                                    fontWeight = FontWeight.ExtraBold,
+                                    color = Color.Black
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "평점",
                                     fontSize = 12.sp,
@@ -99,6 +111,18 @@ fun AlarmPopUp(
                                     modifier = Modifier.padding(top = 1.dp, bottom = 2.dp)
                                 )
                             }
+                            Text(
+                                text = address,
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(bottom = 2.dp)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "> 단체 사진을 정말 잘 찍어주세요 ㅎㅎ",
+                                fontSize = 12.sp,
+                                color = Color.DarkGray,
+                                modifier = Modifier.padding(top = 1.dp, bottom = 2.dp)
+                            )
                         }
                     }
                     Box(

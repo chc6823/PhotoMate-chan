@@ -64,6 +64,7 @@ import com.konkuk.photomate.presentation.screens.notification.NotificationScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileReviewScreen
 import com.konkuk.photomate.presentation.screens.profile.ProfileScreen
 import com.konkuk.photomate.presentation.screens.profileModification.ProfileModificationScreen
+import com.konkuk.photomate.presentation.screens.review.ReviewScreen
 import com.konkuk.photomate.presentation.screens.searching.SearchingScreen
 import com.konkuk.photomate.ui.theme.PhotoMateTheme
 import com.konkuk.photomate.util.KakaoLoginManager
@@ -147,6 +148,11 @@ class MainActivity : ComponentActivity() {
                     Timber.tag("onseok").d(hasBluetoothPermission.toString())
                 }
 
+//                LaunchedEffect(Unit) {
+//                    delay(12000L)
+//                    isPopUpAlarmShown = true
+//                }
+
                 BackHandler(sheetState.isVisible) {
                     scope.launch {
                         sheetState.hide()
@@ -174,8 +180,8 @@ class MainActivity : ComponentActivity() {
 
                 if (isPopUpAlarmShown) {
                     AlarmPopUp(
-                        name = "건국이", // 상대방에게 넘길 나의 이름
-                        address = "건대", // 상대방에게 넘길 나의 주소
+                        name = "마블리", // 상대방에게 넘길 나의 이름
+                        address = "서울 광진구 능동로 120", // 상대방에게 넘길 나의 주소
                         score = 4.3f, // 상대방에게 넘길 나의 평점
                         onDismissRequest = {
                             isPopUpAlarmShown = false
@@ -228,6 +234,7 @@ class MainActivity : ComponentActivity() {
                                 && currentRoute != "matching"
                                 && currentRoute?.contains("searching") != true
                                 && currentRoute != "login"
+                                && currentRoute != "review"
                             ) {
                                 PhotoMateBottomBar(navController = navController)
                             }
@@ -298,7 +305,10 @@ class MainActivity : ComponentActivity() {
                                         "https://phinf.pstatic.net/checkout.phinf/20191126_16/1574772152017D3oGo_JPEG/DDFA6470-AB72-44AB-90E5-F7EB31420795.jpeg",
                                         "https://api.cdn.visitjeju.net/photomng/imgpath/202206/03/ddc76b48-8667-4cd9-bd18-2fa5d801310b.jpg",
                                         "https://blog.kakaocdn.net/dn/o1KIw/btqu9mflPY6/rGk1mM3iugV1c6jj9Z3E80/img.jpg"
-                                    )
+                                    ),
+                                    onNavigateToReviewScreen = {
+                                        navController.navigate("review")
+                                    }
                                 )
                             }
                             composable(route = "modification") {
@@ -335,6 +345,13 @@ class MainActivity : ComponentActivity() {
                                             Timber.tag("kakao_login").d(it)
                                             navController.navigate(Screen.Home.route)
                                         }
+                                    }
+                                )
+                            }
+                            composable("review") {
+                                ReviewScreen(
+                                    onNavigateToHome = {
+                                        navController.navigate("home")
                                     }
                                 )
                             }
