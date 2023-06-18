@@ -24,7 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -143,15 +142,6 @@ class MainActivity : ComponentActivity() {
                         darkIcons = true // 저희는 다크모드 디자인이 없기 때문에 시스템바 아이콘 색상은 항상 검정..
                     )
                 }
-
-                LaunchedEffect(Unit) {
-                    Timber.tag("onseok").d(hasBluetoothPermission.toString())
-                }
-
-//                LaunchedEffect(Unit) {
-//                    delay(12000L)
-//                    isPopUpAlarmShown = true
-//                }
 
                 BackHandler(sheetState.isVisible) {
                     scope.launch {
